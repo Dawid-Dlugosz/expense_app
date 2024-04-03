@@ -1,5 +1,6 @@
 import 'package:expense_app/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_app/models/expense.dart';
+import 'package:expense_app/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -38,10 +39,23 @@ class _ExpnesesState extends State<Expneses> {
     ),
   ];
 
+  void _addNewExpense(Expense expense) {
+    setState(() {
+      _list.add(expense);
+    });
+  }
+
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _list.remove(expense);
+    });
+  }
+
   void _openAddExpenseOverley() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
-      builder: (ctx) => const Text('Modal bottom Sheet'),
+      builder: (ctx) => NewExpense(_addNewExpense),
     );
   }
 
@@ -64,6 +78,7 @@ class _ExpnesesState extends State<Expneses> {
           const Text('the cart,'),
           Expanded(
             child: ExpensesList(
+              onDismissed: _removeExpense,
               expanses: _list,
             ),
           )
