@@ -1,3 +1,4 @@
+import 'package:expense_app/widgets/chart/chart.dart';
 import 'package:expense_app/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_app/models/expense.dart';
 import 'package:expense_app/widgets/new_expense.dart';
@@ -91,7 +92,7 @@ class _ExpnesesState extends State<Expneses> {
       ),
       body: Column(
         children: [
-          const Text('the cart,'),
+          Chart(expenses: _list),
           Expanded(
             child: ExpensesList(
               onDismissed: _removeExpense,
