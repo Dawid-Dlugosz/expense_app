@@ -70,6 +70,7 @@ class _ExpnesesState extends State<Expneses> {
 
   void _openAddExpenseOverley() {
     showModalBottomSheet(
+      useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(_addNewExpense),
@@ -78,6 +79,8 @@ class _ExpnesesState extends State<Expneses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Expense app tracker'),
@@ -90,17 +93,33 @@ class _ExpnesesState extends State<Expneses> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Chart(expenses: _list),
-          Expanded(
-            child: ExpensesList(
-              onDismissed: _removeExpense,
-              expanses: _list,
+      body: width < 600
+          ? Column(
+              children: [
+                Chart(expenses: _list),
+                Expanded(
+                  child: ExpensesList(
+                    onDismissed: _removeExpense,
+                    expanses: _list,
+                  ),
+                )
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(
+                  child: Chart(
+                    expenses: _list,
+                  ),
+                ),
+                Expanded(
+                  child: ExpensesList(
+                    onDismissed: _removeExpense,
+                    expanses: _list,
+                  ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
     );
   }
 }
